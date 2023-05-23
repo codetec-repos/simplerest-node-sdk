@@ -13,11 +13,31 @@ class ReverseAuthentication extends ConfigMap {
 
             const axiosInstance = axios
 
-            const resp = await axiosInstance.post(`${this.getApiURL()}/api/v1/auth/reverse`,  {
+            const resp = await axiosInstance.post(`${this.getApiURL()}/v1/auth/reverse`,  {
                 meta_data: !metaData ? { roles: [] } : metaData,
                 expires,
                 token
             }, {
+                headers: {
+                    'Authorization': `Bearer ${this.getSecretToken()}`
+                }
+            })
+
+            if(resp.status === 401) throw 'The Secret Token is wrong'
+            
+            const { data } = resp.data
+
+            return data
+        } catch (error) {
+            return error
+        }
+    }
+
+    async logout ({ token }) {
+        try {
+            const axiosInstance = axios
+
+            const resp = await axiosInstance.delete(`${this.getApiURL()}/v1/auth/reverse?token=${token}`,  {}, {
                 headers: {
                     'Authorization': `Bearer ${this.getSecretToken()}`
                 }
