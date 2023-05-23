@@ -26,6 +26,20 @@ class SimpleREST extends ConfigMap {
         }
     }
 
+    async reverseAuthenticationLogout ({ token } = { token: null }) {
+        try {
+            if(!this.getSecretToken()) throw 'Secret Token must be not empty or null'
+            if((!token?.length || typeof token !== 'string')) throw 'Token must be string and not empty or null'
+
+            const reverseAuthInstance = new ReverseAuthentication() 
+
+            return await reverseAuthInstance.logout({ token })
+        } catch (error) {
+            console.log(error)
+            return error
+        }
+    }
+
 }
 
 module.exports = SimpleREST
