@@ -37,7 +37,7 @@ class ReverseAuthentication extends ConfigMap {
         try {
             const axiosInstance = axios
 
-            const resp = await axiosInstance.delete(`${this.getApiURL()}/v1/auth/reverse?token=${token}`,  {}, {
+            const resp = await axiosInstance.delete(`${this.getApiURL()}/v1/auth/reverse?token=${token}`, {
                 headers: {
                     'Authorization': `Bearer ${this.getSecretToken()}`
                 }
