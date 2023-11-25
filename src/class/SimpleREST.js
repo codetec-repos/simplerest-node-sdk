@@ -3,9 +3,8 @@ const ConfigMap = require('./ConfigMap'),
 
 class SimpleREST extends ConfigMap {
 
-    constructor ({ secretToken, environment } = { secretToken: null, environment: this.SANDBOX_ENVIRONMENT }) {
+    constructor ({ secretToken } = { secretToken: null }) {
         super()
-        this.setEnvironment({ environment })
         this.setSecretToken({ secretToken })
     }
 

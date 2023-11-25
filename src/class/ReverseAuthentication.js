@@ -13,8 +13,10 @@ class ReverseAuthentication extends ConfigMap {
 
             const axiosInstance = axios
 
+            if(!metaData?.roles) Object.assign(metaData, { roles: [] })
+
             const resp = await axiosInstance.post(`${this.getApiURL()}/v1/auth/reverse`,  {
-                meta_data: !metaData ? { roles: [] } : metaData,
+                meta_data: metaData,
                 expires,
                 token
             }, {

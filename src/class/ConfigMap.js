@@ -2,11 +2,7 @@ const cache = require('../cache')
 
 class ConfigMap {
 
-    static SANDBOX_ENVIRONMENT = 0
-    static PRD_ENVIRONMENT = 1
-
     #secretToken = cache?.get?.('secretToken')
-    #environment = cache?.get?.('environment')
 
     getSecretToken () {
         return this.#secretToken    
@@ -17,19 +13,8 @@ class ConfigMap {
         return this.#secretToken = secretToken
     }
 
-    setEnvironment ({ environment }) {
-        cache?.set?.('environment', environment)
-        return this.#environment = environment
-    }
-
-    getEnvironment () {
-        return this.#environment
-    }
-
     getApiURL () {
-        return !this.#environment 
-            ? 'https://api.client.sandbox.simplerest.com.br' 
-            : 'https://api.client.simplerest.com.br'
+        return process.env.API_URL ?? ''
     }
 }
 
